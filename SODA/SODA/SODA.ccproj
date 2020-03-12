@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>2.8</ProductVersion>
+    <ProjectGuid>3f92382e-ee01-4e11-8b18-566e99e14d5b</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SODA</RootNamespace>
+    <AssemblyName>SODA</AssemblyName>
+    <StartDevelopmentStorage>True</StartDevelopmentStorage>
+    <Name>SODA</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- Items for the project -->
+  <ItemGroup>
+    <ServiceDefinition Include="ServiceDefinition.csdef" />
+    <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
+    <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLOBStorageMonitor\BLOBStorageMonitor.csproj">
+      <Name>BLOBStorageMonitor</Name>
+      <Project>{24418817-7704-40e9-98dc-35fd6e1231c0}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>BLOBStorageMonitor</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+    <ProjectReference Include="..\RabbitMQConnector\RabbitMQConnector.csproj">
+      <Name>RabbitMQConnector</Name>
+      <Project>{7acda46f-c5a6-4ec8-a9c0-500f29b8fb43}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>RabbitMQConnector</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceBusMonitor\ServiceBusMonitor.csproj">
+      <Name>ServiceBusMonitor</Name>
+      <Project>{a2bf1a60-81fb-4981-85f9-2b281e657175}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>ServiceBusMonitor</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+    <ProjectReference Include="..\VirtualDMABuilder\VirtualDMABuilder.csproj">
+      <Name>VirtualDMABuilder</Name>
+      <Project>{a2c3eab6-b684-4821-b25f-fa4f5c7c1d86}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>VirtualDMABuilder</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AzureSBConnectorContent\" />
+    <Folder Include="BLOBStorageMonitorContent\" />
+    <Folder Include="Profiles" />
+    <Folder Include="RabbitMQConnectorContent\" />
+    <Folder Include="ServiceBusMonitorContent\" />
+    <Folder Include="VirtualDMABuilderContent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <DiagnosticsConfiguration Include="AzureSBConnectorContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="BLOBStorageMonitorContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="RabbitMQConnectorContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="ServiceBusMonitorContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="VirtualDMABuilderContent\diagnostics.wadcfgx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishProfile Include="Profiles\UrbanWaterStaging.azurePubxml" />
+  </ItemGroup>
+  <!-- Import the target files for this project template -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\2.8\</CloudExtensionsDir>
+  </PropertyGroup>
+  <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
+</Project>

@@ -1,0 +1,842 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="UrbanWater" Class="SQLAzureDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=cht8ar7sto.database.windows.net;Initial Catalog=UrbanWater;User ID=[UserName];Connect Timeout=300" SettingsObjectName="DataAccess.Properties.Settings" SettingsPropertyName="UrbanWaterConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="Demand.DemandPredictionData" Member="DemandPredictionDatas">
+    <Type Name="DemandPredictionData">
+      <Column Name="DMAId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BaseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CreationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Demand" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Uncertainty" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="GeneratedById" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Application_DemandPredictionData" Member="Application" ThisKey="GeneratedById" OtherKey="Id" Type="Application" IsForeignKey="true" />
+      <Association Name="DMA_DemandPredictionData" Member="DMA" ThisKey="DMAId" OtherKey="Id" Type="DMA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.WaterTreatmentPlant" Member="WaterTreatmentPlants">
+    <Type Name="WaterTreatmentPlant">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="SiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Site_WaterTreatmentPlant" Member="Site" ThisKey="SiteId" OtherKey="Id" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Demand.NearestNeighbourIndex" Member="NearestNeighbourIndexes">
+    <Type Name="NearestNeighbourIndex">
+      <Column Name="[Index]" Member="Index" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="interval_max" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="interval_min" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="input_max" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="input_min" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="Economics.PricingData" Member="PricingDatas">
+    <Type Name="PricingData">
+      <Column Name="LocationId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CreationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="BaseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="GeneratedById" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Application_PricingData" Member="Application" ThisKey="GeneratedById" OtherKey="Id" Type="Application" IsForeignKey="true" />
+      <Association Name="DMA_PricingData" Member="DMA" ThisKey="LocationId" OtherKey="Id" Type="DMA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Meteorological.UnitOfMeasure" Member="UnitOfMeasures">
+    <Type Name="UnitOfMeasure">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Unit" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="Meteorological.WeatherData" Member="WeatherDatas">
+    <Type Name="WeatherData">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Precipitation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Temperature" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Humidity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pressure" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Wind_velocity" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Wind_direction" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Solar_radiation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="WeatherStation_WeatherData" Member="WeatherStation" ThisKey="WeatherStationId" OtherKey="Id" Type="WeatherStation" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Meteorological.WeatherForecastData" Member="WeatherForecastDatas">
+    <Type Name="WeatherForecastData">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Precipitation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Temperature" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Humidity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pressure" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Wind_velocity" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Wind_direction" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Solar_radiation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="BaseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CreationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="GeneratedById" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="WeatherStation_WeatherForecastData" Member="WeatherStation" ThisKey="WeatherStationId" OtherKey="Id" Type="WeatherStation" IsForeignKey="true" />
+      <Association Name="Application_WeatherForecastData" Member="Application" ThisKey="GeneratedById" OtherKey="Id" Type="Application" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Meteorological.WeatherStation" Member="WeatherStations">
+    <Type Name="WeatherStation">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="WeatherStation_WeatherData" Member="WeatherDatas" ThisKey="Id" OtherKey="WeatherStationId" Type="WeatherData" />
+      <Association Name="WeatherStation_WeatherForecastData" Member="WeatherForecastDatas" ThisKey="Id" OtherKey="WeatherStationId" Type="WeatherForecastData" />
+      <Association Name="WeatherStation_DMA" Member="DMAs" ThisKey="Id" OtherKey="WeatherStationId" Type="DMA" />
+    </Type>
+  </Table>
+  <Table Name="Service.Application" Member="Applications">
+    <Type Name="Application">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Application_DemandPredictionData" Member="DemandPredictionDatas" ThisKey="Id" OtherKey="GeneratedById" Type="DemandPredictionData" />
+      <Association Name="Application_PricingData" Member="PricingDatas" ThisKey="Id" OtherKey="GeneratedById" Type="PricingData" />
+      <Association Name="Application_WeatherForecastData" Member="WeatherForecastDatas" ThisKey="Id" OtherKey="GeneratedById" Type="WeatherForecastData" />
+      <Association Name="Application_AvailabilityPredictionData" Member="AvailabilityPredictionDatas" ThisKey="Id" OtherKey="GeneratedById" Type="AvailabilityPredictionData" />
+      <Association Name="Application_DMALeakageData" Member="DMALeakageDatas" ThisKey="Id" OtherKey="GeneratedById" Type="DMALeakageData" />
+    </Type>
+  </Table>
+  <Table Name="Service.Containers" Member="Containers">
+    <Type Name="Container">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FileContainers" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Container_Site" Member="Sites" ThisKey="Id" OtherKey="ContainerId" Type="Site" />
+    </Type>
+  </Table>
+  <Table Name="Service.Event" Member="Events">
+    <Type Name="Event">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EventType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="BusDispatched" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="EventType_Event" Member="EventType1" ThisKey="EventType" OtherKey="ID" Type="EventType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Service.EventType" Member="EventTypes">
+    <Type Name="EventType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="EventType_Event" Member="Events" ThisKey="ID" OtherKey="EventType" Type="Event" />
+    </Type>
+  </Table>
+  <Table Name="Service.Utility" Member="Utilities">
+    <Type Name="Utility">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Utility_Site" Member="Sites" ThisKey="Id" OtherKey="UtilityId" Type="Site" />
+    </Type>
+  </Table>
+  <Table Name="Topology.AvailabilityPredictionData" Member="AvailabilityPredictionDatas">
+    <Type Name="AvailabilityPredictionData">
+      <Column Name="ReservoirId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Contributing_volume" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="BaseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CreationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="GeneratedById" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Application_AvailabilityPredictionData" Member="Application" ThisKey="GeneratedById" OtherKey="Id" Type="Application" IsForeignKey="true" />
+      <Association Name="Reservoir_AvailabilityPredictionData" Member="Reservoir" ThisKey="ReservoirId" OtherKey="Id" Type="Reservoir" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.Borehole" Member="Boreholes">
+    <Type Name="Borehole">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="SiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Site_Borehole" Member="Site" ThisKey="SiteId" OtherKey="Id" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.ConsumptionCharacterizationData" Member="ConsumptionCharacterizationDatas">
+    <Type Name="ConsumptionCharacterizationData">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MeterId" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Volume" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Duration" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Max_flow" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Most_freq_flow_value" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Most_freq_flow_Number" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="characterized_device_value" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="characterized_device_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="confirmed_device_value" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="confirmed_device_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="confirmation" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="time_sin" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="time_cos" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.DMA" Member="DMAs">
+    <Type Name="DMA">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="SiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BurstThreshold" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Virtual" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="DMA_DemandPredictionData" Member="DemandPredictionDatas" ThisKey="Id" OtherKey="DMAId" Type="DemandPredictionData" />
+      <Association Name="DMA_PricingData" Member="PricingDatas" ThisKey="Id" OtherKey="LocationId" Type="PricingData" />
+      <Association Name="DMA_DMALeakageData" Member="DMALeakageDatas" ThisKey="Id" OtherKey="DMAId" Type="DMALeakageData" />
+      <Association Name="DMA_DMAData" Member="DMADatas" ThisKey="Id" OtherKey="DMAId" Type="DMAData" />
+      <Association Name="DMA_Meter" Member="Meters" ThisKey="Id" OtherKey="DMAId" Type="Meter" />
+      <Association Name="DMA_Customer" Member="Customers" ThisKey="Id" OtherKey="DmaId" Type="Customer" />
+      <Association Name="WeatherStation_DMA" Member="WeatherStation" ThisKey="WeatherStationId" OtherKey="Id" Type="WeatherStation" IsForeignKey="true" />
+      <Association Name="Site_DMA" Member="Site" ThisKey="SiteId" OtherKey="Id" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.DMALeakageData" Member="DMALeakageDatas">
+    <Type Name="DMALeakageData">
+      <Column Name="DMAId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Real_losses_value" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Real_losses_Type" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="BaseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CreationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="GeneratedById" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="DMA_DMALeakageData" Member="DMA" ThisKey="DMAId" OtherKey="Id" Type="DMA" IsForeignKey="true" />
+      <Association Name="Application_DMALeakageData" Member="Application" ThisKey="GeneratedById" OtherKey="Id" Type="Application" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.[Pipe]" Member="Pipes">
+    <Type Name="Pipe">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="SiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Site_Pipe" Member="Site" ThisKey="SiteId" OtherKey="Id" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.PumpStation" Member="PumpStations">
+    <Type Name="PumpStation">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="SiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Site_PumpStation" Member="Site" ThisKey="SiteId" OtherKey="Id" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.Reservoir" Member="Reservoirs">
+    <Type Name="Reservoir">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Reservoir_AvailabilityPredictionData" Member="AvailabilityPredictionDatas" ThisKey="Id" OtherKey="ReservoirId" Type="AvailabilityPredictionData" />
+      <Association Name="Reservoir_ReservoirData" Member="ReservoirDatas" ThisKey="Id" OtherKey="ReservoirId" Type="ReservoirData" />
+      <Association Name="Site_Reservoir" Member="Site" ThisKey="SiteId" OtherKey="Id" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.ReservoirData" Member="ReservoirDatas">
+    <Type Name="ReservoirData">
+      <Column Name="ReservoirId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Volume" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="[Level]" Member="Level" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Reservoir_ReservoirData" Member="Reservoir" ThisKey="ReservoirId" OtherKey="Id" Type="Reservoir" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.Tank" Member="Tanks">
+    <Type Name="Tank">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SiteId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Tank_TankData" Member="TankDatas" ThisKey="Id" OtherKey="TankId" Type="TankData" />
+      <Association Name="Site_Tank" Member="Site" ThisKey="SiteId" OtherKey="Id" Type="Site" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.TankData" Member="TankDatas">
+    <Type Name="TankData">
+      <Column Name="TankId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Volume" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="outflow" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Inflow" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Tank_TankData" Member="Tank" ThisKey="TankId" OtherKey="Id" Type="Tank" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.VariableType" Member="VariableTypes">
+    <Type Name="VariableType">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="Topology.Site" Member="Sites">
+    <Type Name="Site">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="UtilityId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ContainerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TableName" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Site_WaterTreatmentPlant" Member="WaterTreatmentPlants" ThisKey="Id" OtherKey="SiteId" Type="WaterTreatmentPlant" />
+      <Association Name="Site_Borehole" Member="Boreholes" ThisKey="Id" OtherKey="SiteId" Type="Borehole" />
+      <Association Name="Site_DMA" Member="DMAs" ThisKey="Id" OtherKey="SiteId" Type="DMA" />
+      <Association Name="Site_Pipe" Member="Pipes" ThisKey="Id" OtherKey="SiteId" Type="Pipe" />
+      <Association Name="Site_PumpStation" Member="PumpStations" ThisKey="Id" OtherKey="SiteId" Type="PumpStation" />
+      <Association Name="Site_Reservoir" Member="Reservoirs" ThisKey="Id" OtherKey="SiteId" Type="Reservoir" />
+      <Association Name="Site_Tank" Member="Tanks" ThisKey="Id" OtherKey="SiteId" Type="Tank" />
+      <Association Name="Container_Site" Member="Container" ThisKey="ContainerId" OtherKey="Id" Type="Container" IsForeignKey="true" />
+      <Association Name="Utility_Site" Member="Utility" ThisKey="UtilityId" OtherKey="Id" Type="Utility" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.DMAData" Member="DMADatas">
+    <Type Name="DMAData">
+      <Column Name="DMAId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Time" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Flow" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Pressure" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Volume" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="DMA_DMAData" Member="DMA" ThisKey="DMAId" OtherKey="Id" Type="DMA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.Meter" Member="Meters">
+    <Type Name="Meter">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MeterIdentity" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="DMAId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Meter_Customer" Member="Customers" ThisKey="Id" OtherKey="MeterId" Type="Customer" />
+      <Association Name="DMA_Meter" Member="DMA" ThisKey="DMAId" OtherKey="Id" Type="DMA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Topology.Customer" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="CustomerNumber" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="MeterId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DmaId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="DMA_Customer" Member="DMA" ThisKey="DmaId" OtherKey="Id" Type="DMA" IsForeignKey="true" />
+      <Association Name="Meter_Customer" Member="Meter" ThisKey="MeterId" OtherKey="Id" Type="Meter" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.WeatherDataGet" Method="WeatherDataGet">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="StartDateTime" Parameter="startDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="EndDateTime" Parameter="endDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="WeatherDataGetResult">
+      <Column Name="" Member="Column1" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Precipitation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Temperature" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Humidity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pressure" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Wind_velocity" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Wind_direction" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Solar_radiation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="Topology.InsertTankData" Method="InsertTankData">
+    <Parameter Name="TankIdentity" Parameter="tankIdentity" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="From" Parameter="from" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="To" Parameter="to" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="Volume" Parameter="volume" Type="System.Double" DbType="Float" />
+    <Parameter Name="Outflow" Parameter="outflow" Type="System.Double" DbType="Float" />
+    <Parameter Name="Inflow" Parameter="inflow" Type="System.Double" DbType="Float" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.WeatherDataGet_Full" Method="WeatherDataGet_Full">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="StartDateTime" Parameter="startDateTime" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="EndDateTime" Parameter="endDateTime" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="WeatherDataGet_FullResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Precipitation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Temperature" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Humidity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pressure" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Wind_velocity" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Wind_direction" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Solar_radiation" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.WeatherDataGet_Hour" Method="WeatherDataGet_Hour">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="StartDateTime" Parameter="startDateTime" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="EndDateTime" Parameter="endDateTime" Type="System.DateTime" DbType="DateTime" />
+    <ElementType Name="WeatherDataGet_HourResult">
+      <Column Name="rn" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Precipitation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Temperature" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Humidity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pressure" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Wind_velocity" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Wind_direction" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Solar_radiation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestDemandPrediction" Method="FindNearestDemandPrediction">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestDemandPredictionResult">
+      <Column Name="DMAId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BaseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="CreationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Demand" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Uncertainty" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestDMAflow" Method="FindNearestDMAflow">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestDMAflowResult">
+      <Column Name="DMAId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestDMApressure" Method="FindNearestDMApressure">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestDMApressureResult">
+      <Column Name="DMAId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestDMAvolume" Method="FindNearestDMAvolume">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestDMAvolumeResult">
+      <Column Name="DMAId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherForecastHumidity" Method="FindNearestWeatherForecastHumidity">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherForecastHumidityResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherForecastPrecipitation" Method="FindNearestWeatherForecastPrecipitation">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherForecastPrecipitationResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherForecastPressure" Method="FindNearestWeatherForecastPressure">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherForecastPressureResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherForecastSolarRadiation" Method="FindNearestWeatherForecastSolarRadiation">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherForecastSolarRadiationResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherForecastTemperature" Method="FindNearestWeatherForecastTemperature">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherForecastTemperatureResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherForecastWindDirection" Method="FindNearestWeatherForecastWindDirection">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherForecastWindDirectionResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherForecastWindVelocity" Method="FindNearestWeatherForecastWindVelocity">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherForecastWindVelocityResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherHumidity" Method="FindNearestWeatherHumidity">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherHumidityResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherPrecipitation" Method="FindNearestWeatherPrecipitation">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherPrecipitationResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherPressure" Method="FindNearestWeatherPressure">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherPressureResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherSolarRadiation" Method="FindNearestWeatherSolarRadiation">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherSolarRadiationResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherTemperature" Method="FindNearestWeatherTemperature">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherTemperatureResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Unscaled" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherWindDirection" Method="FindNearestWeatherWindDirection">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherWindDirectionResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.FindNearestWeatherWindVelocity" Method="FindNearestWeatherWindVelocity">
+    <Parameter Name="ElementId" Parameter="elementId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumberOfNearest" Parameter="numberOfNearest" Type="System.Int32" DbType="Int" />
+    <Parameter Name="mu" Type="System.Double" DbType="Float" />
+    <Parameter Name="ve" Type="System.Double" DbType="Float" />
+    <Parameter Name="SourceRegressor" Parameter="sourceRegressor" Type="System.Double" DbType="Float" />
+    <Parameter Name="inputDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="FindNearestWeatherWindVelocityResult">
+      <Column Name="WeatherStationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Scaled_Regressor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Distance" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Demand.GetDemandPredictionData" Method="GetDemandPredictionData">
+    <Parameter Name="startDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="endDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="GetDemandPredictionDataResult">
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Demand" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Uncertainty" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="GeneratedById" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BaseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="CreationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Application" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="rn" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Economics.GetPricingData" Method="GetPricingData">
+    <Parameter Name="startDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="endDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="CreationDateTime" Parameter="creationDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <ElementType Name="GetPricingDataResult">
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="CreationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="BaseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="diff" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Meteorological.GetWeatherData" Method="GetWeatherData">
+    <Parameter Name="startDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="endDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="GetWeatherDataResult">
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Precipitation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Temperature" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Humidity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pressure" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Wind_velocity" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Wind_direction" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Solar_radiation" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Meteorological.GetWeatherPredictionData" Method="GetWeatherPredictionData">
+    <Parameter Name="startDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="endDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="GetWeatherPredictionDataResult">
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Precipitation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Temperature" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Humidity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Pressure" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Wind_velocity" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Wind_direction" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Solar_radiation" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="BaseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="CreationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Application" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="rn" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Meteorological.InsertWeatherData" Method="InsertWeatherData">
+    <Parameter Name="WeatherStationIdentity" Parameter="weatherStationIdentity" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="From" Parameter="from" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="To" Parameter="to" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="Precipitation" Parameter="precipitation" Type="System.Double" DbType="Float" />
+    <Parameter Name="Temperature" Parameter="temperature" Type="System.Double" DbType="Float" />
+    <Parameter Name="Humidity" Parameter="humidity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Pressure" Parameter="pressure" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Wind_velocity" Parameter="wind_velocity" Type="System.Double" DbType="Float" />
+    <Parameter Name="Wind_direction" Parameter="wind_direction" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Solar_radiation" Parameter="solar_radiation" Type="System.Double" DbType="Float" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="Meteorological.InsertWeatherForecastData" Method="InsertWeatherForecastData">
+    <Parameter Name="WeatherStationIdentity" Parameter="weatherStationIdentity" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="From" Parameter="from" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="To" Parameter="to" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="Precipitation" Parameter="precipitation" Type="System.Double" DbType="Float" />
+    <Parameter Name="Temperature" Parameter="temperature" Type="System.Double" DbType="Float" />
+    <Parameter Name="Humidity" Parameter="humidity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Pressure" Parameter="pressure" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Wind_velocity" Parameter="wind_velocity" Type="System.Double" DbType="Float" />
+    <Parameter Name="Wind_direction" Parameter="wind_direction" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Solar_radiation" Parameter="solar_radiation" Type="System.Double" DbType="Float" />
+    <Parameter Name="BaseTime" Parameter="baseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="CreationTime" Parameter="creationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="Comment" Parameter="comment" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="GeneratedById" Parameter="generatedById" Type="System.String" DbType="NVarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="Topology.GetAvailabilityPredictionData" Method="GetAvailabilityPredictionData">
+    <Parameter Name="startDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="endDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="GetAvailabilityPredictionDataResult">
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Contributing_volume" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="GeneratedById" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BaseTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="CreationTime" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="Topology.GetDICMSite" Method="GetDICMSite">
+    <Parameter Name="startDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="endDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="GetDICMSiteResult">
+      <Column Name="Volume" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Duration" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Topology.GetDMAData" Method="GetDMAData">
+    <Parameter Name="startDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="endDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="GetDMADataResult">
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Time" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Flow" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Pressure" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Volume" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Topology.GetmeterList" Method="GetmeterList">
+    <Parameter Name="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="GetmeterListResult">
+      <Column Name="MeterIdentity" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="Topology.GetTankData" Method="GetTankData">
+    <Parameter Name="startDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="endDateTime" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="elementId" Type="System.String" DbType="NVarChar(MAX)" />
+    <ElementType Name="GetTankDataResult">
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="[From]" Member="From" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="[To]" Member="To" Type="System.DateTimeOffset" DbType="DateTimeOffset NOT NULL" CanBeNull="false" />
+      <Column Name="Volume" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Outflow" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Inflow" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="Topology.InsertDMAData" Method="InsertDMAData">
+    <Parameter Name="DMAIdentity" Parameter="dMAIdentity" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="Time" Parameter="time" Type="System.DateTimeOffset" DbType="DateTimeOffset" />
+    <Parameter Name="Flow" Parameter="flow" Type="System.Double" DbType="Float" />
+    <Parameter Name="Volume" Parameter="volume" Type="System.Double" DbType="Float" />
+    <Parameter Name="Pressure" Parameter="pressure" Type="System.Double" DbType="Float" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

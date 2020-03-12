@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SODA", "SODA\SODA.ccproj", "{3F92382E-EE01-4E11-8B18-566E99E14D5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLOBStorageMonitor", "BLOBStorageMonitor\BLOBStorageMonitor.csproj", "{24418817-7704-40E9-98DC-35FD6E1231C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusMonitor", "ServiceBusMonitor\ServiceBusMonitor.csproj", "{A2BF1A60-81FB-4981-85F9-2B281E657175}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQConnector", "RabbitMQConnector\RabbitMQConnector.csproj", "{7ACDA46F-C5A6-4EC8-A9C0-500F29B8FB43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{C266F6AD-073F-4207-8EA5-E114C81C8567}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualDMABuilder", "VirtualDMABuilder\VirtualDMABuilder.csproj", "{A2C3EAB6-B684-4821-B25F-FA4F5C7C1D86}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F92382E-EE01-4E11-8B18-566E99E14D5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F92382E-EE01-4E11-8B18-566E99E14D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F92382E-EE01-4E11-8B18-566E99E14D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F92382E-EE01-4E11-8B18-566E99E14D5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24418817-7704-40E9-98DC-35FD6E1231C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24418817-7704-40E9-98DC-35FD6E1231C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24418817-7704-40E9-98DC-35FD6E1231C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24418817-7704-40E9-98DC-35FD6E1231C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2BF1A60-81FB-4981-85F9-2B281E657175}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2BF1A60-81FB-4981-85F9-2B281E657175}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2BF1A60-81FB-4981-85F9-2B281E657175}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2BF1A60-81FB-4981-85F9-2B281E657175}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACDA46F-C5A6-4EC8-A9C0-500F29B8FB43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACDA46F-C5A6-4EC8-A9C0-500F29B8FB43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACDA46F-C5A6-4EC8-A9C0-500F29B8FB43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACDA46F-C5A6-4EC8-A9C0-500F29B8FB43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C266F6AD-073F-4207-8EA5-E114C81C8567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C266F6AD-073F-4207-8EA5-E114C81C8567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C266F6AD-073F-4207-8EA5-E114C81C8567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C266F6AD-073F-4207-8EA5-E114C81C8567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2C3EAB6-B684-4821-B25F-FA4F5C7C1D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2C3EAB6-B684-4821-B25F-FA4F5C7C1D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2C3EAB6-B684-4821-B25F-FA4F5C7C1D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2C3EAB6-B684-4821-B25F-FA4F5C7C1D86}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

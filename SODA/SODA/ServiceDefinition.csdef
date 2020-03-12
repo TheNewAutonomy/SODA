@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="SODA" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
+  <WorkerRole name="BLOBStorageMonitor" vmsize="ExtraSmall">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="StorageConnectionString" />
+      <Setting name="FileInventory" />
+      <Setting name="Microsoft.ServiceBus.ConnectionString" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+    </ConfigurationSettings>
+  </WorkerRole>
+  <WorkerRole name="ServiceBusMonitor" vmsize="ExtraSmall">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="MKWDNConnectionString" />
+      <Setting name="StorageConnectionString" />
+      <Setting name="Microsoft.ServiceBus.ConnectionString" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+    </ConfigurationSettings>
+  </WorkerRole>
+  <WorkerRole name="RabbitMQConnector" vmsize="Standard_D1_v2">
+    <ConfigurationSettings>
+      <Setting name="DataConnectionString" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" />
+    </ConfigurationSettings>
+  </WorkerRole>
+  <WorkerRole name="VirtualDMABuilder" vmsize="ExtraSmall">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+      <Setting name="DataConnectionString" />
+    </ConfigurationSettings>
+  </WorkerRole>
+</ServiceDefinition>
