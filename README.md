@@ -33,3 +33,5 @@ Third party systems that have been developed on top of this platform include the
 
 SODA is a continuation of the UrbanWater platform to include other smart city use cases such as management of street lighting.
 SODA is fully compatible with UrbanWater deployments but is open for further extension into other smart city domains.
+
+Requires Visual Studio 2015
